@@ -26,3 +26,4 @@ This helps us see the frequency distribution of categorical variables
 	df['ApplicantIncome'].hist(bins=50)
 
 This plots the histograms. This helps us observe extreme values.
+
