@@ -7,8 +7,34 @@ title: Machine Learning Project on Imbalanced Datasets
 
 
 ## Introduction ##
-Imbalanced data typically refers to a problem with classification problems where the classes are not represented equally(e.g. 90% of the data belongs to one class). They are commonly seen in  fraud detection, cancer detection, manufacturing defects, and online ads conversion. Working on an imbalanced dataset tends to be extremely tricky as simple classification algorithms tend to struggle in such situations, usually resulting in overfitting on the majority class and completely ignoring the minority class.
+Imbalanced data typically refers to a problem with classification problems where the classes are not represented equally(e.g. 90% of the data belongs to one class). They are commonly seen in  fraud detection, cancer detection, manufacturing defects, and online ads conversion. 
+
+Working on an imbalanced dataset tends to be extremely tricky as simple classification algorithms tend to struggle in such situations, usually resulting in overfitting on the majority class and completely ignoring the minority class.
 
 The dataset in this project is taken from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/machine-learning-databases/census-income-mld/). However you will find the column names not included there - you can download the training data and the test data in the links below, courtesy of the Analytics Vidhya team:
-    [Download Training Data](https://www.analyticsvidhya.com/wp-content/uploads/2016/09/train.zip)
-    [Download Test data]((https://www.analyticsvidhya.com/wp-content/uploads/2016/09/test.zip)
+
+[Download Training Data](https://www.analyticsvidhya.com/wp-content/uploads/2016/09/train.zip)
+[Download Test data](https://www.analyticsvidhya.com/wp-content/uploads/2016/09/test.zip)
+
+## The Problem Statement ##
+### Given various features, the aim is to build a predictive model to determine the income level for people in US. The income levels are binned at below 50K and above 50K.
+
+From the problem statement, it’s evident that this is a binary classification problem, to find out if the income level is below or above 50k, based on a set of features stated below: 
+
+1. Age
+2. Marital Status
+3. Income
+4. Family Members
+5. No. of Dependents
+6. Tax Paid
+7. Investment (Mutual Fund, Stock)
+8. Return from Investments
+9. Education
+10. Spouse Education
+11. Nationality
+12. Occupation
+13. Region in US
+14. Race
+15. Occupation category
+
+I will be completing the data exploration / data manipulation using Python and the machine learning portion using R.
