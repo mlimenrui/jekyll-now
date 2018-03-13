@@ -61,14 +61,14 @@ test = pd.read_csv("C:/Users/ML/Documents/test.csv")
 #how many columns our training dataset has
 train.info()
 ```
-`<class 'pandas.core.frame.DataFrame'>`
-`RangeIndex: 199523 entries, 0 to 199522`
-`Data columns (total 41 columns):`
-`age                                 199523 non-null int64`
-`class_of_worker                     199523 non-null object`
-`.`
-`.`
-`.`
+`<class 'pandas.core.frame.DataFrame'>`  
+`RangeIndex: 199523 entries, 0 to 199522`  
+`Data columns (total 41 columns):`  
+`age                                 199523 non-null int64`  
+`class_of_worker                     199523 non-null object`  
+`.`  
+`.`  
+`.`  
 
 ```javascript
 #how many rows our training dataset has
