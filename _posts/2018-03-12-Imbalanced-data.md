@@ -358,3 +358,30 @@ test_frames = [num_test, cat_test]
 d_train = pd.concat(train_frames)
 d_test = pd.concat(test_frames)
 ```
+
+## 1. The Problem Statement ##
+_Note: This portion is done in R and is largely inspired by [Analytics Vidhya's Imbalanced Dataset Project](https://www.analyticsvidhya.com/blog/2016/09/this-machine-learning-project-on-imbalanced-data-can-add-value-to-your-resume/)._
+
+Making predictions on this data should atleast give us ~94% accuracy _(due to our majority class forming roughly 94% of our data)_. However, while working on imbalanced problems, accuracy is considered to be a poor evaluation metrics because:
+1.Accuracy is calculated by ratio of correct classifications / incorrect classifications.  
+2.This metric would largely tell us how accurate our predictions are on the majority class (since it comprises 94% of values). But, we need to know if we are predicting minority class correctly.  
+In such situations, we should use elements of a **confusion matrix**. 
+
+We begin by importing our `d_train` and `d_test` into R, and carry on from there.
+```javascript
+#load library for machine learning
+> library(mlr)
+```
+```javascript
+#create task
+> train.task <- makeClassifTask(data = d_train,target = "income_level")
+> test.task <- makeClassifTask(data=d_test,target = "income_level")
+```
+The function ` makeClassifTask()` in R helps us encapsulate the dataset by stating it as a classification problem, with the target variable we want to predict being  `income_level` as stated in the function above.
+```javascript
+#remove zero variance features
+> train.task <- removeConstantFeatures(train.task)
+> test.task <- removeConstantFeatures(test.task)
+```
+Constant features can lead to errors in some models and obviously provide no information in the training set that can be learned from. The function `removeConstantFeatures()` in R helps us remove those variables with zero variance.
+ #### Confusion Matrix
