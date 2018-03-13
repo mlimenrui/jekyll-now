@@ -101,4 +101,15 @@ test['income_level'].value_counts()
 `50000+.       6186`    
 `Name: income_level, dtype: int64`  
 
+We can already see some discrepancy in our target variable- the value 50000 is different across train and test data. This disparity will cause trouble in model evaluation. Being a binary classification problem, we can encode these variables as 0 and 1. I'm showing two different ways(for train and test data) we can do this below.
 
+```javascript
+#Changing train dataset income levels to binary
+train['income_level'].replace(-50000, '0',inplace=True)
+train['income_level'].replace(50000, '1',inplace=True)
+```
+```javascript
+#Changing test dataset income levels to binary
+a1 = test['income_level'].str.contains('-50000')
+test['income_level'] = np.select([a1], [0], default=1)
+```
