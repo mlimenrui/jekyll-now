@@ -88,6 +88,6 @@ Name: income_level, dtype: int64`
 test['income_level'].value_counts()
 ```
 
--50000      93576  
-50000+.     6186  
-Name: income_level, dtype: int64
+`-50000        93576  
+50000+.       6186  
+Name: income_level, dtype: int64`
