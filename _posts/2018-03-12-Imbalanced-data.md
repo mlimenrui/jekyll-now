@@ -42,14 +42,14 @@ _**Note:**_ I will be completing the data exploration / data manipulation using 
 
 ## 2. Data Exploration ##
 Let's begin by importing the libraries required, and loading the training data and test data into Python.
-``javascript
+```javascript
 #Importing the libraries
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 #To display our plots and graphs inline
 %matplotlib inline
-``
+```
 
 ```javascript
 #Loading the train and test data
@@ -61,12 +61,32 @@ test = pd.read_csv("C:/Users/ML/Documents/test.csv")
 #how many columns our training dataset has
 train.info()
 ```
-
-`Out[]: 199523`
-
 ```javascript
 #how many rows our training dataset has
 len(train)
 ```
+`Out[]: 199523`
 
+```javascript
+#how many rows our training dataset has
+len(test)
+```
 `Out[]: 99762`
+
+We see that train data has 199523 rows & 41 columns, and tst data has 99762 rows and 41 columns. Generally, test data comes with one less column than train (the variable we want to predict; income_level). It means that this data set has test prediction values also. This will help us in evaluating our model.
+
+Let's verify the target variable we want to predict for both train and test datasets. 
+
+```javascript
+train['income_level'].value_counts()
+```
+`Out[]: -50000    187141
+         50000     12382
+Name: income_level, dtype: int64`
+
+```javascript
+test['income_level'].value_counts()
+```
+`Out[]: -50000      93576
+         50000+.     6186
+Name: income_level, dtype: int64`
