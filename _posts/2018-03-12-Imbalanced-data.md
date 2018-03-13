@@ -259,3 +259,18 @@ cat_test['class_of_worker'].value_counts()
 `Private             72028`  
 `Other               27250`  
 `Name: class_of_worker, dtype: int64`  
+
+We do the same for `cat_test` as well. However do check if the proportion of `class_of_worker` is split evenly like `cat_train` as well.
+```javascript
+series_test = pd.value_counts(cat_test.class_of_worker)
+mask_test = (series_test/series_test.sum() * 100).lt(5)
+# To replace cat_test['class_of_worker'] use np.where. Example:
+cat_test['class_of_worker'] = np.where(cat_test['class_of_worker'].isin(series_test[mask_test].index),'Other',cat_test['class_of_worker'])
+```
+`Not in universe    50079`  
+`Private            36071`  
+`Other               13612`  
+`Name: class_of_worker, dtype: int64`  
+
+#### Binning numerical variables
+Before proceeding to the modeling stage, let’s look at numeric variables and reflect on possible ways for binning. Since a histogram wasn’t enough for us to make decision, let’s create simple tables representing counts of unique values in these variables as shown:
