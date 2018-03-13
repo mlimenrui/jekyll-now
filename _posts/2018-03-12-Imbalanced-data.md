@@ -339,3 +339,22 @@ num_train['wage_per_hour']
 `5         MorethanZero`  
 `.`  
 `.`  
+We do this for `num_test` as well.
+```javascript
+aa2 = num_test['wage_per_hour'] == 0
+num_test['wage_per_hour'] = np.select([aa2], ['Zero'], default = 'MorethanZero')
+```
+
+Now, we can remove the dependent variable(`income_level`) from the training dataset (`num_train`).
+```javascript
+# remove the dependent variable from num_train we added for visualization purpose earlier
+num_train['income_level'] = 'NaN'
+```
+
+Let's combine `num_train` and `cat_train` back to one training dataset, and `num_test` and `cat_test` back to one test dataset.
+```javascript
+train_frames = [num_train, cat_train]
+test_frames = [num_test, cat_test]
+d_train = pd.concat(train_frames)
+d_test = pd.concat(test_frames)
+```
