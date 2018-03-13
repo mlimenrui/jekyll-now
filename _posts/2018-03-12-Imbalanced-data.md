@@ -148,7 +148,7 @@ As we can see, the data set consists of people aged from 0 to 90 with the freque
 ```javascript
 num_train['capital_losses'].hist(bins=20)
 ```
-![histogram on capital losses]({{ site.baseurl }}/images/histogram2.png "an image title")
+![histogram on capital losses]({{ site.baseurl }}/images/histogram2.PNG "an image title")
 
 This is a nasty right skewed graph. In skewed distribution, normalizing is always an option. But we need to look into this variable deeper as this insight isn’t significant enough for decision making. One option could be to check for unique values. If they are less, we can tabulate the distribution (done in upcoming sections).
 
@@ -157,7 +157,7 @@ Furthermore, in classification problems, we should also plot numerical variables
 ```javascript
 plt.scatter(num_train['age'], num_train['wage_per_hour'], c= cat_train['income_level'], s=10)
 ```
-![scatterplot of age vs wage per hour colored by income level]({{ site.baseurl }}/images/scatter.png "an image title")
+![age vs wage per hour by income level]({{ site.baseurl }}/images/scatter.PNG "Scatterplot")
 
 _yellow scatter plots being those with income_level of binary value 1, and purple being those with income_level of binary value 0._
 
@@ -165,7 +165,7 @@ As we can see, most of the people having income_level 1, seem to fall in the age
 
 Similarly, we can visualize our *categorical variables* as well. Let's do so for `class_of_worker` variable.
 
-![scatterplot of age vs wage per hour colored by income level]({{ site.baseurl }}/images/barchart.png "an image title")
+![scatterplot of age vs wage per hour colored by income level]({{ site.baseurl }}/images/barchart.PNG "an image title")
 We can see that this variable looks imbalanced i.e. only two category levels seem to dominate. In such situation, a good practice is to **combine levels having less than 5% frequency** of the total category frequency _(covered in part 5. Data Manipulation)_. 
 The response `Not in universe` category appears unintuitive. Let’s assume that this response is given by people who got frustrated (due to any reason) while filling their census data.
 
