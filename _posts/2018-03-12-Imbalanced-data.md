@@ -543,4 +543,6 @@ Specificity : 0.6585
 > f_measure
 #0.9726374 
 ```
-As we can see, xgboost has outperformed naive Bayes model’s accuracy, with our F score(`f_measure`) being higher using xgboost.
+As we can see, xgboost has outperformed naive Bayes model’s accuracy, with our F score(`f_measure`) being higher using xgboost. Having a specificity of 65%, this means for our model, 65% of the minority classes have been predicted correctly.
+
+More measures can be taken to improve model accuracy, such as using only the important features instead of all the features (like what we are doing here), using the R function `filterFeatures` and doing XGboost on the model again. For now, I hope this model will suffice.
