@@ -152,6 +152,48 @@ num_train['capital_losses'].hist(bins=20)
 
 This is a nasty right skewed graph. In skewed distribution, normalizing is always an option. But we need to look into this variable deeper as this insight isn’t significant enough for decision making. One option could be to check for unique values. If they are less, we can tabulate the distribution (done in upcoming sections).
 
-Furthermore, in classification problems, we should also plot numerical variables with dependent variable. 
+Furthermore, in classification problems, we should also plot numerical variables with dependent variable. This would help us determine the clusters (if exists) of classes 0 and 1. For this, we need to add the target variable in num_train data:
 
+```javascript
+plt.scatter(num_train['age'], num_train['wage_per_hour'], c= cat_train['income_level'], s=10)
+```
 ![scatterplot of age vs wage per hour colored by income level]({{ site.baseurl }}/images/scatter.png "an image title")
+
+_yellow scatter plots being those with income_level of binary value 1, and purple being those with income_level of binary value 0._
+
+As we can see, most of the people having income_level 1, seem to fall in the age of 25-65 earning wage of $1000 to $4000 per hour. This plot further strengthens our assumption that age < 20 would have income_level 0, hence we will bin this variable.
+
+Similarly, we can visualize our *categorical variables* as well. Let's do so for `class_of_worker` variable.
+
+
+We can see that this variable looks imbalanced i.e. only two category levels seem to dominate. In such situation, a good practice is to **combine levels having less than 5% frequency** of the total category frequency _(covered in part 5. Data Manipulation)_. 
+The response `Not in universe` category appears unintuitive. Let’s assume that this response is given by people who got frustrated (due to any reason) while filling their census data.
+
+Let's visualize our `education` variable.
+
+Evidently, all children have `income_level` 0. Also, we can infer than Bachelors degree holders have the largest proportion of people have income_level 1. Similarly, you can plot other categorical variables also.
+
+## 4. Data Cleaning ##
+
+Let’s check for missing values in numeric variables.
+```javascript
+#Check for null values in our numerical columns
+num_train.apply(lambda x: sum(x.isnull()),axis=0)
+```
+
+We see that numeric variables has no missing values. Good for us! Now, let’s check for missing values in categorical data.
+We find that some of the variables have ~50% missing values for cat_train; namely the `migration` columns. High proportion of missing value can be attributed to difficulty in data collection. For now, we’ll remove these category levels, for both train and test data.
+
+```javascript
+cat_train = cat_train.drop(['migration_msa','migration_reg', 'migration_within_reg', 'migration_sunbelt'], axis = 1)
+cat_test = cat_test.drop(['migration_msa','migration_reg', 'migration_within_reg', 'migration_sunbelt'], axis = 1)
+```
+For the rest of missing values, a nicer approach would be to label them as ‘Unavailable’. Imputing missing values on large data sets can be painstaking.
+
+```javascript
+cat_train = cat_train.fillna("Unavailable")
+```
+Let's look at `country_father`, which previously had 6713 NA values, which should be labelled as `Unavailable` now.
+cat_train['country_father'].value_counts()
+
+
