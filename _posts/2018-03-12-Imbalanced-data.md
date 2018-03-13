@@ -273,4 +273,32 @@ cat_test['class_of_worker'] = np.where(cat_test['class_of_worker'].isin(series_t
 `Name: class_of_worker, dtype: int64`  
 
 #### Binning numerical variables
-Before proceeding to the modeling stage, let’s look at numeric variables and reflect on possible ways for binning. Since a histogram wasn’t enough for us to make decision, let’s create simple tables representing counts of unique values in these variables as shown:
+Before proceeding to the modeling stage, let’s look at numeric variables and reflect on possible ways for binning. The specific variable we are interested in binning would be `age`; as seen previously where we plotted `age` against `wage_per_hour` colored by `income level`, with `income level` at binary value 0 for those 20 and under.
+
+We first define a function that allows us to easily bin variables:
+```javascript
+#Binning:
+def binning(col, cut_points, labels=None):
+  #Define min and max values:
+  minval = col.min()
+  maxval = col.max()
+
+  #create list by adding min and max to cut_points
+  break_points = [minval] + cut_points + [maxval]
+
+  #if no labels provided, use default labels 0 ... (n-1)
+  if not labels:
+    labels = range(len(cut_points)+1)
+
+  #Binning using cut function of pandas
+  colBin = pd.cut(col,bins=break_points,labels=labels,include_lowest=True)
+  return colBin
+```
+
+And now we bin the age: 0-30 being renamed as `young`, 30-60 classified as `adult`, 60-90 classified as `old`. Let's do this for our `num_train` dataframe first.
+```javascript
+#Binning age
+cut_points = [30,60]
+labels = ["young","adult","old"]
+num_train['age'] = binning(num_train['age'], cut_points, labels)
+```
