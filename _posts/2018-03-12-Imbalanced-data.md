@@ -42,7 +42,7 @@ _**Note:**_ I will be completing the data exploration / data manipulation using 
 
 ## 2. Data Exploration ##
 Let's begin by importing the libraries required, and loading the training data and test data into Python.
-```javascript
+`In````javascript
 #Importing the libraries
 import pandas as pd
 import numpy as np
@@ -55,4 +55,13 @@ import matplotlib.pyplot as plt
 #Loading the train and test data
 train = pd.read_csv("C:/Users/ML/Documents/train.csv")
 test = pd.read_csv("C:/Users/ML/Documents/test.csv")
+```
+```javascript
+#how many columns our training dataset has
+train.info()
+```
+`
+```javascript
+#how many rows our training dataset has
+len(train)
 ```
