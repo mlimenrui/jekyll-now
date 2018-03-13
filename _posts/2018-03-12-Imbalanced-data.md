@@ -80,7 +80,7 @@ len(train)
 #how many rows our training dataset has
 len(test)
 ```
-`99762`
+	99762
 
 We see that train data has 199523 rows & 41 columns, and tst data has 99762 rows and 41 columns. Generally, test data comes with one less column than train (the variable we want to predict; income_level). It means that this data set has test prediction values also. This will help us in evaluating our model.
 
