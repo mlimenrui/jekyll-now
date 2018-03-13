@@ -302,3 +302,21 @@ cut_points = [30,60]
 labels = ["young","adult","old"]
 num_train['age'] = binning(num_train['age'], cut_points, labels)
 ```
+And now we bin our `num_test` dataframe.
+```javascript
+cut_points = [30,60]
+labels = ["young","adult","old"]
+num_test['age'] = binning(num_test['age'], cut_points, labels)
+```
+
+Let's verify to see if the column `age` in `num_test` dataframe is updated.
+```javascript
+num_test['age']
+```
+`0        adult`  
+`1        adult`  
+`2        young`  
+`3        adult`  
+`4        adult`  
+`.`  
+`.`  
