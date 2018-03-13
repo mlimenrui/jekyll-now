@@ -136,9 +136,22 @@ cat_test = test.iloc[:, factcols]
 num_test = test.iloc[:, numcols]
 ```
 
-## 3. Distribution Analysis ##
+## 3. Distribution/Bivariate Analysis ##
 Let’s conduct our distribution analysis for **numerical variables** now. The best way to understand these variables is by using a Histogram plot.
 ```javascript
 num_train['age'].hist(bins=100)
 ```
-![an image alt text]({{ site.baseurl }}/images/histogram.png "an image title")
+![histogram on age]({{ site.baseurl }}/images/histogram.png "an image title")
+
+As we can see, the data set consists of people aged from 0 to 90 with the frequency of people **declining** with age. Using some intuition, it is highly unlikely the population below age 20 could earn >50K under normal circumstances. Therefore, we can **bin this variable into age groups**_(covered in part 5. Data Manipulation)_.
+
+```javascript
+num_train['capital_losses'].hist(bins=20)
+```
+![histogram on capital losses]({{ site.baseurl }}/images/histogram2.png "an image title")
+
+This is a nasty right skewed graph. In skewed distribution, normalizing is always an option. But we need to look into this variable deeper as this insight isn’t significant enough for decision making. One option could be to check for unique values. If they are less, we can tabulate the distribution (done in upcoming sections).
+
+Furthermore, in classification problems, we should also plot numerical variables with dependent variable. 
+
+![scatterplot of age vs wage per hour colored by income level]({{ site.baseurl }}/images/scatter.png "an image title")
