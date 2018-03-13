@@ -165,7 +165,7 @@ As we can see, most of the people having income_level 1, seem to fall in the age
 
 Similarly, we can visualize our *categorical variables* as well. Let's do so for `class_of_worker` variable.
 
-
+![scatterplot of age vs wage per hour colored by income level]({{ site.baseurl }}/images/barchart.png "an image title")
 We can see that this variable looks imbalanced i.e. only two category levels seem to dominate. In such situation, a good practice is to **combine levels having less than 5% frequency** of the total category frequency _(covered in part 5. Data Manipulation)_. 
 The response `Not in universe` category appears unintuitive. Let’s assume that this response is given by people who got frustrated (due to any reason) while filling their census data.
 
