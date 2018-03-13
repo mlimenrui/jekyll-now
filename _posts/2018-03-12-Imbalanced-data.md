@@ -182,7 +182,22 @@ num_train.apply(lambda x: sum(x.isnull()),axis=0)
 ```
 
 We see that numeric variables has no missing values. Good for us! Now, let’s check for missing values in categorical data.
-We find that some of the variables have ~50% missing values for cat_train; namely the `migration` columns. High proportion of missing value can be attributed to difficulty in data collection. For now, we’ll remove these category levels, for both train and test data.
+
+```javascript
+#Check for null values in our numerical columns
+num_train.apply(lambda x: sum(x.isnull()),axis=0)
+```
+`class_of_worker                         0`  
+`industry_code                           0`  
+`.`  
+`.`  
+`migration_within_reg                99696`  
+`live_1_year_ago                         0`  
+`migration_sunbelt                   99696`  
+`country_father                       6713`  
+`.`  
+`.`  
+We find that some of the variables have ~50% missing values for `cat_train`; namely the `migration` columns. High proportion of missing value can be attributed to difficulty in data collection. For now, we’ll remove these category levels, for both train and test data.
 
 ```javascript
 cat_train = cat_train.drop(['migration_msa','migration_reg', 'migration_within_reg', 'migration_sunbelt'], axis = 1)
@@ -195,5 +210,9 @@ cat_train = cat_train.fillna("Unavailable")
 ```
 Let's look at `country_father`, which previously had 6713 NA values, which should be labelled as `Unavailable` now.
 cat_train['country_father'].value_counts()
+`United-States                   159163`  
+`Mexico                           10008`  
+`Unavailable                       6713`  
+`Puerto-Rico                       2680`  
 
-
+## 5. Data Manipulation ##
