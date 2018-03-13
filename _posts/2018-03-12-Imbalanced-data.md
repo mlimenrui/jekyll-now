@@ -61,17 +61,26 @@ test = pd.read_csv("C:/Users/ML/Documents/test.csv")
 #how many columns our training dataset has
 train.info()
 ```
+`<class 'pandas.core.frame.DataFrame'>`
+`RangeIndex: 199523 entries, 0 to 199522`
+`Data columns (total 41 columns):`
+`age                                 199523 non-null int64`
+`class_of_worker                     199523 non-null object`
+`.`
+`.`
+`.`
+
 ```javascript
 #how many rows our training dataset has
 len(train)
 ```
-`Out[]: 199523`
+`199523`
 
 ```javascript
 #how many rows our training dataset has
 len(test)
 ```
-`Out[]: 99762`
+`99762`
 
 We see that train data has 199523 rows & 41 columns, and tst data has 99762 rows and 41 columns. Generally, test data comes with one less column than train (the variable we want to predict; income_level). It means that this data set has test prediction values also. This will help us in evaluating our model.
 
@@ -80,8 +89,8 @@ Let's verify the target variable we want to predict for both train and test data
 ```javascript
 train['income_level'].value_counts()
 ```
-`Out[]: -50000    187141`   
-        `50000     12382`  
+`-50000    187141`   
+`50000     12382`  
 `Name: income_level, dtype: int64`  
 
 ```javascript
