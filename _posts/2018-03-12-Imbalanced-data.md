@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Machine Learning Project on Imbalanced Datasets
+title: Building a predictive model with imbalanced data
 ---
 
 
