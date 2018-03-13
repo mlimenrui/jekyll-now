@@ -365,7 +365,7 @@ _Note: This portion is done in R and is largely inspired by [Analytics Vidhya's 
 Making predictions on this data should atleast give us ~94% accuracy _(due to our majority class forming roughly 94% of our data)_. However, while working on imbalanced problems, accuracy is considered to be a poor evaluation metrics because:
 1.Accuracy is calculated by ratio of correct classifications / incorrect classifications.  
 2.This metric would largely tell us how accurate our predictions are on the majority class (since it comprises 94% of values). But, we need to know if we are predicting minority class correctly.  
-In such situations, we should use elements of a **confusion matrix**. 
+In such situations, we should use elements of a **confusion matrix**, to decide on the viability of a model.
 
 We begin by importing our `d_train` and `d_test` into R, and making some minor adjustments before we use our model:
 ```javascript
@@ -472,3 +472,75 @@ Now, let’s build our model SMOTE data and check our final prediction accuracy.
 > f_measure <- 2*((precision*recall)/(precision+recall))
 > f_measure 
 ```
+The function `confusionMatrix` is taken from `library(caret)`. This naive Bayes model predicts 98% of the majority class correctly, but disappoints at minority class prediction (~23%). Let’s use xgboost algorithm and try to improve our model. We’ll do 5 fold cross validation and 5 round random search for parameter tuning. Finally, we’ll build the model using the best tuned parameters.
+```javascript
+#xgboost
+> set.seed(2002)
+> xgb_learner <- makeLearner("classif.xgboost",predict.type = "response")
+> xgb_learner$par.vals <- list(
+                      objective = "binary:logistic",
+                      eval_metric = "error",
+                      nrounds = 150,
+                      print.every.n = 50
+)
+```
+```javascript
+#define hyperparameters for tuning
+> xg_ps <- makeParamSet( 
+                makeIntegerParam("max_depth",lower=3,upper=10),
+                makeNumericParam("lambda",lower=0.05,upper=0.5),
+                makeNumericParam("eta", lower = 0.01, upper = 0.5),
+                makeNumericParam("subsample", lower = 0.50, upper = 1),
+                makeNumericParam("min_child_weight",lower=2,upper=10),
+                makeNumericParam("colsample_bytree",lower = 0.50,upper = 0.80)
+)
+```
+```javascript
+#define search function
+> rancontrol <- makeTuneControlRandom(maxit = 5L) #do 5 iterations
+```
+```javascript
+#5 fold cross validation
+> set_cv <- makeResampleDesc("CV",iters = 5L,stratify = TRUE)
+```
+```javascript
+#tune parameters
+> xgb_tune <- tuneParams(learner = xgb_learner, task = train.task, resampling = set_cv, measures = list(acc,tpr,tnr,fpr,fp,fn), par.set = xg_ps, control = rancontrol)
+# Tune result:
+# Op. pars: max_depth=3; lambda=0.221; eta=0.161; subsample=0.698; min_child_weight=7.67; colsample_bytree=0.642
+# acc.test.mean=0.948,tpr.test.mean=0.989,tnr.test.mean=0.324,fpr.test.mean=0.676
+```
+Now, we can use these parameters for modeling using `xgb_tune$x` which contains the best tuned parameters.
+```javascript
+#set optimal parameters
+> xgb_new <- setHyperPars(learner = xgb_learner, par.vals = xgb_tune$x)
+```
+```javascript
+#train model
+> xgmodel <- train(xgb_new, train.task)
+```
+```javascript
+#test model
+> predict.xg <- predict(xgmodel, test.task)
+```
+```javascript
+#make prediction
+> xg_prediction <- predict.xg$data$response
+```
+```javascript
+#make confusion matrix
+> xg_confused <- confusionMatrix(d_test$income_level,xg_prediction)
+Accuracy : 0.948
+Sensitivity : 0.9574
+Specificity : 0.6585
+```
+```javascript
+> precision <- xg_confused$byClass['Pos Pred Value']
+> recall <- xg_confused$byClass['Sensitivity']
+```
+```javascript
+> f_measure <- 2*((precision*recall)/(precision+recall))
+> f_measure
+#0.9726374 
+```
+As we can see, xgboost has outperformed naive Bayes model’s accuracy, with our F score(`f_measure`) being higher using xgboost.
