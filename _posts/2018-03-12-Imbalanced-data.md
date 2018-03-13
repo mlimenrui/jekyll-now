@@ -80,7 +80,7 @@ len(test)
 ```
 `99762`
 
-We see that train data has 199523 rows & 41 columns, and tst data has 99762 rows and 41 columns. Generally, test data comes with one less column than train (the variable we want to predict; income_level). It means that this data set has test prediction values also. This will help us in evaluating our model.
+We see that train data has 199523 rows & 41 columns, and test data has 99762 rows and 41 columns. Generally, test data comes with one less column than train (the variable we want to predict; income_level). It means that this data set has test prediction values also. This will help us in evaluating our model.
 
 Let's verify the target variable we want to predict for both train and test datasets. 
 
@@ -119,6 +119,22 @@ train['income_level'].value_counts()
 `1     12382`  
 `Name: income_level, dtype: int64`  
 
-Perfect! we've successfully changed this to binary values (0 and 1). Now let’s look at the severity of imbalanced classes in our data. Already we can see that 187141(out of 199523) of our values are 0; this is our majority class with a proportion of 94%. In other words, with a decent ML algorithm, our model would get 94% model accuracy. In absolute figures, it looks incredible. But, our performance would depend on, how good can we predict the minority classes.
+Perfect! we've successfully changed this to binary values (0 and 1). Now let’s look at the severity of imbalanced classes in our data. Already we can see that 187141(out of 199523) of our values are 0; this is our majority class with a proportion of 94%. In other words, with a decent ML algorithm, our model would get 94% model accuracy. In absolute figures, it looks incredible. But our performance would depend on how good can we predict the **minority classes**.
 
+Let’s separate the categorical variables & numerical variables. This will help us in conducting our distribution analysis.
+```javascript
+# stating the categorical variable column number and numerical column number
+factcols = np.r_[1:5,7,8:16,20:29,31:38,40]
+numcols = np.r_[0,5:7,16:20,29:31,38:40]
+```
+```javascript
+#subset the categorical variables and numerical variables for train and test data
+cat_train = train.iloc[:, factcols]
+num_train = train.iloc[:, numcols]
 
+cat_test = test.iloc[:, factcols]
+num_test = test.iloc[:, numcols]
+```
+
+## 3. Distribution Analysis ##
+Let’s conduct our distribution analysis for **numerical variables** now. The best way to understand these variables is by using a Histogram plot.
