@@ -80,14 +80,16 @@ Let's verify the target variable we want to predict for both train and test data
 ```javascript
 train['income_level'].value_counts()
 ```
-`Out[]: -50000    187141  
-         50000     12382
-Name: income_level, dtype: int64`
+`Out[]: -50000    187141`   
+`        50000     12382`  
+`Name: income_level, dtype: int64`  
 
 ```javascript
 test['income_level'].value_counts()
 ```
 
--50000        93576  
-50000+.       6186  
-Name: income_level, dtype: int64
+`-50000        93576`  
+`50000+.       6186`    
+`Name: income_level, dtype: int64`  
+
+
