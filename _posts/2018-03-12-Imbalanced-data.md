@@ -123,7 +123,7 @@ Perfect! we've successfully changed this to binary values (0 and 1). Now let’s
 
 Let’s separate the categorical variables & numerical variables. This will help us in conducting our distribution analysis.
 ```javascript
-# stating the categorical variable column number and numerical column number
+#state which column numbers categorical and numerical variables belong to
 factcols = np.r_[1:5,7,8:16,20:29,31:38,40]
 numcols = np.r_[0,5:7,16:20,29:31,38:40]
 ```
@@ -138,3 +138,6 @@ num_test = test.iloc[:, numcols]
 
 ## 3. Distribution Analysis ##
 Let’s conduct our distribution analysis for **numerical variables** now. The best way to understand these variables is by using a Histogram plot.
+```javascript
+num_train['age'].hist(bins=100)
+```
