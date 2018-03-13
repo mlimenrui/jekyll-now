@@ -14,6 +14,7 @@ Working on an imbalanced dataset tends to be extremely tricky as simple classifi
 The dataset in this project is taken from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/machine-learning-databases/census-income-mld/). However you will find the column names not included there - you can download the training data and the test data in the links below, courtesy of the Analytics Vidhya team:
 
 [Download Training Data](https://www.analyticsvidhya.com/wp-content/uploads/2016/09/train.zip)
+
 [Download Test data](https://www.analyticsvidhya.com/wp-content/uploads/2016/09/test.zip)
 
 ## The Problem Statement ##
@@ -37,4 +38,4 @@ From the problem statement, it’s evident that this is a binary classification 
 14. Race
 15. Occupation category
 
-I will be completing the data exploration / data manipulation using Python and the machine learning portion using R.
+_**Note:**_ I will be completing the data exploration / data manipulation using Python and the machine learning portion using R.
