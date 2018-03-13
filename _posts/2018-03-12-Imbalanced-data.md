@@ -49,7 +49,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 #To display our plots and graphs inline
 %matplotlib inline
-```
+
 
 ```javascript
 #Loading the train and test data
