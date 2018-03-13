@@ -405,3 +405,70 @@ We will try these 3 techniques and experience how it works.
 > train.smote <- smote(train.task,rate = 15,nn = 5)
 ```
 
+Now that we have balanced our data using 3 separate techniques, let us see which algorithms are available for us to use. R has a neat function which lists the available algorithms we can use to solve a problem, by stating the type of problem _(classification or regression)_ and how many classes our dependent variable takes _(two in this case, 0 and 1 for `income_level`)_
+```javascript
+#lets see which algorithms are available
+> listLearners("classif","twoclass")[c("class","package")]
+```
+One of the algorithms listed is **Naive Bayes**, an algorithms based on bayes theorem. We’ll use naive Bayes on all 4 data sets (imbalanced, oversample, undersample and SMOTE) and compare the **prediction accuracy** using **cross validation**.
+```javascript
+#naive Bayes
+> naive_learner <- makeLearner("classif.naiveBayes",predict.type = "response")
+> naive_learner$par.vals <- list(laplace = 1)
+```
+```javascript
+#10fold CV - stratified
+> folds <- makeResampleDesc("CV",iters=10,stratify = TRUE)
+```
+```javascript
+#cross validation function
+> fun_cv <- function(a){
+     crv_val <- resample(naive_learner,a,folds,measures = list(acc,tpr,tnr,fpr,fp,fn))
+     crv_val$aggr
+}
+```
+```javascript
+> fun_cv (train.task) 
+# acc.test.mean tpr.test.mean tnr.test.mean fpr.test.mean 
+# 0.7337249       0.8954134     0.7230270    0.2769730
+```
+```javascript
+> fun_cv(train.under) 
+# acc.test.mean tpr.test.mean tnr.test.mean fpr.test.mean 
+# 0.7637315      0.9126978     0.6651696     0.3348304
+```
+```javascript
+> fun_cv(train.over)
+# acc.test.mean tpr.test.mean tnr.test.mean fpr.test.mean 
+#   0.7861459     0.9145749     0.6586852    0.3413148
+```
+```javascript
+> fun_cv(train.smote)
+# acc.test.mean tpr.test.mean tnr.test.mean fpr.test.mean 
+#   0.8562135     0.9168955    0.8160638     0.1839362
+```
+This package names cross validated results as `test.mean`. After comparing, we see that `train.smote` gives the highest true positive rate and true negative rate. Hence, we learn that the SMOTE technique outperforms the other two sampling methods.
+
+Now, let’s build our model SMOTE data and check our final prediction accuracy.
+```javascript
+#train and predict
+> nB_model <- train(naive_learner, train.smote)
+> nB_predict <- predict(nB_model,test.task)
+```
+```javascript
+#evaluate
+> nB_prediction <- nB_predict$data$response
+> dCM <- confusionMatrix(d_test$income_level,nB_prediction)
+# Accuracy : 0.8174
+# Sensitivity : 0.9862
+# Specificity : 0.2299
+```
+```javascript
+#calculate F measure
+> precision <- dCM$byClass['Pos Pred Value']
+> recall <- dCM$byClass['Sensitivity']
+```
+```javascript
+> f_measure <- 2*((precision*recall)/(precision+recall))
+> f_measure 
+```
