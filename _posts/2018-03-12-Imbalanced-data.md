@@ -208,7 +208,7 @@ We find that some of the variables have ~50% missing values for `cat_train`; nam
 cat_train = cat_train.drop(['migration_msa','migration_reg', 'migration_within_reg', 'migration_sunbelt'], axis = 1)
 cat_test = cat_test.drop(['migration_msa','migration_reg', 'migration_within_reg', 'migration_sunbelt'], axis = 1)
 ```
-For the rest of missing values, a nicer approach would be to label them as ‘Unavailable’. Imputing missing values on large data sets can be painstaking.
+For the rest of the missing values, a nicer approach would be to label them as ‘Unavailable’. Choosing the most suitable method for replacing missing values and imputing these values on large data sets can be painstakingly tedious.
 
 ```javascript
 cat_train = cat_train.fillna("Unavailable")
@@ -273,7 +273,7 @@ cat_test['class_of_worker'] = np.where(cat_test['class_of_worker'].isin(series_t
 `Name: class_of_worker, dtype: int64`  
 
 #### Binning numerical variables
-Before proceeding to the modeling stage, let’s look at numeric variables and reflect on possible ways for binning. The specific variable we are interested in binning would be `age`; as seen previously where we plotted `age` against `wage_per_hour` colored by `income level`, with `income level` at binary value 0 for those 20 and under.
+Before proceeding to the modeling stage, let’s look at numeric variables and reflect on possible ways for binning. The specific variable we are interested in binning would be `age`; as seen previously where we plotted `age` against `wage_per_hour` colored by `income level`, with `income level` at binary value 0 for those 20 and under. There are various rule-of-thumbs to determine the binning range such as decision trees, I have included one such article [here](https://clevertap.com/blog/how-to-convert-numerical-variables-to-categorical-variables-with-decision-trees/) on deciding the binning range for variables.
 
 We first define a function that allows us to easily bin variables:
 ```javascript
@@ -318,5 +318,24 @@ num_test['age']
 `2        young`  
 `3        adult`  
 `4        adult`  
+`.`  
+`.`  
+
+
+Similarly, we should check on the other variables as well. For some of these variables, we are clear that more than 70-80% of the observations are 0. We can bin these variables as `Zero` and `MorethanZero`.
+```javascript
+#Bin 'wage_per_hour' variable as 'Zero' and 'MorethanZero'
+aa1 = num_train['wage_per_hour'] == 0
+num_train['wage_per_hour'] = np.select([aa1], ['Zero'], default = 'MorethanZero')
+```
+```javascript
+num_train['wage_per_hour']
+```
+`0                 Zero`  
+`1                 Zero`  
+`2                 Zero`  
+`3                 Zero`  
+`4                 Zero`  
+`5         MorethanZero`  
 `.`  
 `.`  
