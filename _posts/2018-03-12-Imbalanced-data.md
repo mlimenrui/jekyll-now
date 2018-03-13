@@ -359,7 +359,7 @@ d_train = pd.concat(train_frames)
 d_test = pd.concat(test_frames)
 ```
 
-## 1. The Problem Statement ##
+## 6. Machine Learning ##
 _Note: This portion is done in R and is largely inspired by [Analytics Vidhya's Imbalanced Dataset Project](https://www.analyticsvidhya.com/blog/2016/09/this-machine-learning-project-on-imbalanced-data-can-add-value-to-your-resume/)._
 
 Making predictions on this data should atleast give us ~94% accuracy _(due to our majority class forming roughly 94% of our data)_. However, while working on imbalanced problems, accuracy is considered to be a poor evaluation metrics because:
@@ -367,7 +367,7 @@ Making predictions on this data should atleast give us ~94% accuracy _(due to ou
 2.This metric would largely tell us how accurate our predictions are on the majority class (since it comprises 94% of values). But, we need to know if we are predicting minority class correctly.  
 In such situations, we should use elements of a **confusion matrix**. 
 
-We begin by importing our `d_train` and `d_test` into R, and carry on from there.
+We begin by importing our `d_train` and `d_test` into R, and making some minor adjustments before we use our model:
 ```javascript
 #load library for machine learning
 > library(mlr)
@@ -384,4 +384,24 @@ The function ` makeClassifTask()` in R helps us encapsulate the dataset by stati
 > test.task <- removeConstantFeatures(test.task)
 ```
 Constant features can lead to errors in some models and obviously provide no information in the training set that can be learned from. The function `removeConstantFeatures()` in R helps us remove those variables with zero variance.
- #### Confusion Matrix
+ #### Making our data balanced: Oversampling, Undersampling and SMOTE
+Now, we’ll try to make our data balanced using various techniques such as over sampling, undersampling and SMOTE. In SMOTE, the algorithm looks at the n-nearest neighbors, measures the distance between them and introduces a new observation at the center of n observations. While proceeding, we must keep in mind that these techniques have their own drawbacks such as:
+* undersampling leads to loss of information
+* oversampling leads to overestimation of minority class
+
+We will try these 3 techniques and experience how it works.
+```javascript
+#undersampling 
+> train.under <- undersample(train.task,rate = 0.1) #keep only 10% of majority class
+> table(getTaskTargets(train.under))
+```
+```javascript
+#oversampling
+> train.over <- oversample(train.task,rate=15) #make minority class 15 times
+> table(getTaskTargets(train.over))
+```
+```javascript
+#SMOTE
+> train.smote <- smote(train.task,rate = 15,nn = 5)
+```
+
