@@ -113,3 +113,14 @@ train['income_level'].replace(50000, '1',inplace=True)
 a1 = test['income_level'].str.contains('-50000')
 test['income_level'] = np.select([a1], [0], default=1)
 ```
+Now let's see how it looks like.
+```javascript 
+train['income_level'].value_counts()
+```
+`0    187141`  
+`1     12382`  
+`Name: income_level, dtype: int64`  
+
+Perfect! we've successfully changed this to binary values (0 and 1). Now let’s look at the severity of imbalanced classes in our data. Already we can see that 187141(out of 199523) of our values are 0; this is our majority class with a proportion of 94%. In other words, with a decent ML algorithm, our model would get 94% model accuracy. In absolute figures, it looks incredible. But, our performance would depend on, how good can we predict the minority classes.
+
+
