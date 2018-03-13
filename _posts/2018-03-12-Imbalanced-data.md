@@ -180,6 +180,11 @@ Let’s check for missing values in numeric variables.
 #Check for null values in our numerical columns
 num_train.apply(lambda x: sum(x.isnull()),axis=0)
 ```
+`age                            0`  
+`wage_per_hour                  0`  
+`enrolled_in_edu_inst_lastwk    0`  
+`.`  
+`.`  
 
 We see that numeric variables has no missing values. Good for us! Now, let’s check for missing values in categorical data.
 
@@ -209,10 +214,48 @@ For the rest of missing values, a nicer approach would be to label them as ‘Un
 cat_train = cat_train.fillna("Unavailable")
 ```
 Let's look at `country_father`, which previously had 6713 NA values, which should be labelled as `Unavailable` now.
+```javascript
 cat_train['country_father'].value_counts()
+```
 `United-States                   159163`  
 `Mexico                           10008`  
 `Unavailable                       6713`  
 `Puerto-Rico                       2680`  
+`.`  
+`.`  
 
 ## 5. Data Manipulation ##
+We are approaching towards the machine learning stage. However machine learning algorithms return better accuracy when the data set has clear signals to offer. Specially, in the case of imbalanced classification, we should try our best to shape the data such that we can derive maximum information about the minority class.
+
+In previous analysis, we saw that categorical variables have several levels with low frequencies(`education` in `cat_train`). Such levels don’t help as chances are they wouldn’t be available in test set. We’ll do this hygiene check in the coming steps.
+
+#### Combining factor levels with low frequencies
+In previous analysis, we saw that categorical variables have several levels with low frequencies(`education` in `cat_train`). Such levels don’t help as chances are they wouldn’t be available in test set. We’ll do this hygiene check in the coming steps.
+```javascript
+cat_test['class_of_worker'].value_counts()
+```
+`Not in universe                   50079`  
+`Private                           36071`  
+`Self-employed-not incorporated     4280`  
+`Local government                   3833`  
+`State government                   2167`  
+`Self-employed-incorporated         1648`  
+`Federal government                 1405`  
+`Never worked                        204`  
+`Without pay                          75`  
+`Name: class_of_worker, dtype: int64`  
+
+The code below combines categories in `class_of_worker` where they make up less than 5% of the total count. This should combine all categories with the exception of `Not in universe` and `Private`, and classify them as `Other`.
+```javascript
+series = pd.value_counts(cat_train.class_of_worker)
+mask = (series/series.sum() * 100).lt(5)
+# To replace cat_train['class_of_worker'] use np.where. Example:
+cat_train['class_of_worker'] = np.where(cat_train['class_of_worker'].isin(series[mask].index),'Other',cat_train['class_of_worker'])
+```
+```javascript
+cat_test['class_of_worker'].value_counts()
+```
+`Not in universe    100245`  
+`Private             72028`  
+`Other               27250`  
+`Name: class_of_worker, dtype: int64`  
