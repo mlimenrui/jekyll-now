@@ -47,22 +47,26 @@ Let's begin by importing the libraries required, and loading the training data a
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
 #To display our plots and graphs inline
 %matplotlib inline
 ```
+
 ```javascript
 #Loading the train and test data
 train = pd.read_csv("C:/Users/ML/Documents/train.csv")
 test = pd.read_csv("C:/Users/ML/Documents/test.csv")
 ```
+
 ```javascript
 #how many columns our training dataset has
 train.info()
 ```
-`199523`
+
+`Out[]: 199523`
+
 ```javascript
 #how many rows our training dataset has
 len(train)
 ```
-`99762`
+
+`Out[]: 99762`
