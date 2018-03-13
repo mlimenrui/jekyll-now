@@ -141,4 +141,4 @@ Let’s conduct our distribution analysis for **numerical variables** now. The b
 ```javascript
 num_train['age'].hist(bins=100)
 ```
-![an image alt text]({{ mlimenrui.github.io }}/images/histogram.JPG "an image title")
+![an image alt text]({{ mlimenrui.github.io }}/images/histogram.png "an image title")
