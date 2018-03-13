@@ -11,14 +11,14 @@ Imbalanced data typically refers to a problem with classification problems where
 
 Working on an imbalanced dataset tends to be extremely tricky as simple classification algorithms tend to struggle in such situations, usually resulting in overfitting on the majority class and completely ignoring the minority class.
 
-The dataset in this project is taken from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/machine-learning-databases/census-income-mld/). However you will find the column names not included there - you can download the training data and the test data in the links below, courtesy of the Analytics Vidhya team:
+The dataset in this project is taken from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/machine-learning-databases/census-income-mld/). However you will find the column names not included in the dataset- you can download the training data and the test data in the links below, courtesy of the Analytics Vidhya team:
 
 [Download Training Data](https://www.analyticsvidhya.com/wp-content/uploads/2016/09/train.zip)
 
 [Download Test data](https://www.analyticsvidhya.com/wp-content/uploads/2016/09/test.zip)
 
-## The Problem Statement ##
-### Given various features, the aim is to build a predictive model to determine the income level for people in US. The income levels are binned at below 50K and above 50K.
+## 1. The Problem Statement ##
+#### _"Given various features, the aim is to build a predictive model to determine the income level for people in US. The income levels are binned at below 50K and above 50K."_
 
 From the problem statement, it’s evident that this is a binary classification problem, to find out if the income level is below or above 50k, based on a set of features stated below: 
 
@@ -39,3 +39,16 @@ From the problem statement, it’s evident that this is a binary classification 
 15. Occupation category
 
 _**Note:**_ I will be completing the data exploration / data manipulation using Python and the machine learning portion using R.
+
+## 2. Data Exploration ##
+Let's begin by importing the libraries required, and loading the training data and test data into Python.
+```javascript
+#Importing the libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+#To display our plots and graphs inline
+%matplotlib inline
+```
+
